@@ -25,21 +25,6 @@ public class UserRepositoryTest extends TestCase {
         userList.add(new User(5, "Maxim"));
         userList.add(new User(6, "Artem"));
         userList.add(new User(7, "Nikita"));
-}
-
-    public void testGetAllUsers() {
-        List<User> testUserList = userRepository.getAllUsers();
-
-        Assert.assertEquals(testUserList, userList);
-    }
-
-    public void testGetUserById() {
-        User userTest = userRepository.getUserById(3);
-        User user = userList.get(2);
-
-        Assert.assertEquals(userTest, user);
-
-        Assert.assertNull(userRepository.getUserById(9));
     }
 
     public void testSaveUser() {
@@ -53,7 +38,17 @@ public class UserRepositoryTest extends TestCase {
         Assert.assertFalse(userRepository.saveUser(user));
     }
 
+    public void testGetAllUsers() {
+        testSaveUser();
+
+        List<User> testUserList = userRepository.getAllUsers();
+
+        Assert.assertEquals(testUserList, userList);
+    }
+
     public void testUpdateUser() {
+        testSaveUser();
+
         User user = new User(2, "Oleg2");
         userList.set(1, user);
 
@@ -64,9 +59,19 @@ public class UserRepositoryTest extends TestCase {
     }
 
     public void testDeleteUser() {
-        userList.remove(2);
+        userList.remove(1);
 
-        userRepository.deleteUser(3);
+        userRepository.deleteUser(8);
+        userRepository.deleteUser(2);
         Assert.assertEquals(userRepository.getAllUsers(), userList);
+    }
+
+    public void testGetUserById() {
+        User userTest = userRepository.getUserById(4);
+        User user = userList.get(3);
+
+        Assert.assertEquals(userTest, user);
+
+        Assert.assertNull(userRepository.getUserById(9));
     }
 }
